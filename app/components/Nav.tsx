@@ -1,15 +1,20 @@
 "use client"
 
+import useClientAuth from "@/hooks/useClientAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FaHome, FaUser} from "react-icons/fa";
 
-
 export default function Nav() {
 
-  const router = useRouter()
+  const {user, loginWithGoogle, redirectIfAuthenticated} = useClientAuth()
+
   const goToDashboard = () => {
-    router.push('/dashboard')
+    if(!user) {
+      loginWithGoogle()
+    } else {
+      redirectIfAuthenticated()
+    }
   }
 
   return (
